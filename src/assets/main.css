@@ -1,0 +1,53 @@
+.nav-link.dropdown-toggle::after {
+    display: none;
+}
+
+.nav-center {
+    line-height: 3.3;
+}
+
+#my-dropdown {
+    transform: translateX(-72%);
+    background: radial-gradient(circle 248px at center, #16d9e3 33%, #30c7ec 77%, #46aef7 100%);
+    border: solid 2px #46aef7;
+}
+
+@media (max-width:990px) {
+    #my-dropdown {
+        transform: translateX(0);
+    }
+}
+
+.my-big-pic {
+    opacity: 0.4;
+}
+
+.buy-process-text {
+    transform: translateX(-32%) translateY(60%);
+}
+
+.my-noshow {
+    display: none;
+}
+
+@media (max-width:990px) {
+    .my-process-text {
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width:485px) {
+    .my-process-text {
+        font-size: 0.5rem;
+    }
+}
+
+.buy-process-circle {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.buying-list-pic {
+    width: 3.5rem;
+    height: 3.5rem;
+}
