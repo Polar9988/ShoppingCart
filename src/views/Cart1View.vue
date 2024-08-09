@@ -1,5 +1,5 @@
 <script>
-import { RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router';
 import countBtn from '@/components/countBtn.vue';
 
 export default {
@@ -21,41 +21,51 @@ export default {
     },
     computed: {
         totalQuantity() {
-            return this.shoppingList.reduce((total, item) => total + item.quantity, 0);
+            return this.shoppingList.reduce((total, item) => total + (item.quantity || 0), 0);
         },
         totalPrice() {
-            return this.shoppingList.reduce((total, item) => total + (item.price * item.quantity), 0);
+            return this.shoppingList.reduce((total, item) => total + (item.price * (item.quantity || 0)), 0);
         }
     },
     methods: {
         updateQuantity({ id, quantity }) {
+            console.log(`更新 id 為 ${id} 的項目數量為 ${quantity}`);
             const item = this.shoppingList.find(item => item.id === id);
             if (item) {
-                item.quantity = quantity;
+                if (quantity !== undefined && quantity >= 0) {
+                    item.quantity = quantity;
+                } else {
+                    console.error(`數量無效: ${quantity}`);
+                }
+            } else {
+                console.error(`未找到 id 為 ${id} 的項目。`);
             }
-            this.setlocalStorage(); // 更新 localStorage
+            this.setLocalStorage(); // 更新 localStorage
         },
-        setlocalStorage() {
+        setLocalStorage() {
             localStorage.setItem('shoppingList', JSON.stringify(this.shoppingList));
         },
-        loadlocalStorage() {
+        loadLocalStorage() {
             try {
                 const storedList = localStorage.getItem('shoppingList');
-                const parsedList = storedList ? JSON.parse(storedList) : [];
-                this.shoppingList = parsedList.map(item => ({
-                    id: item.id || 0,
-                    name: item.name || '',
-                    price: item.price || 0,
-                    quantity: item.quantity || 1 // 默认值
-                }));
+                if (storedList) {
+                    this.shoppingList = JSON.parse(storedList);
+                    // 確保每個 item 都有 quantity 屬性
+                    this.shoppingList.forEach(item => {
+                        if (item.quantity === undefined) {
+                            item.quantity = 1; // 默認值
+                        }
+                    });
+                }
             } catch (error) {
-                console.error("Error loading shopping list from localStorage:", error);
-                this.shoppingList = [];
+                console.error("從 localStorage 載入購物清單時發生錯誤:", error);
+                this.shoppingList = []; // 若發生錯誤，設為空陣列
             }
         }
     }
 };
 </script>
+
 <template>
     <main class="container-xxl py-lg-5 py-2 px-xxl-5">
         <div class="container my-5 my-bg-pic">
@@ -248,10 +258,10 @@ export default {
                                         <div class="">
                                             <p class="mb-0">{{ shoppingList[0].quantity }} + {{ shoppingList[1].quantity
                                                 }} + {{ shoppingList[2].quantity }} = {{ shoppingList[0].quantity +
-                                                shoppingList[1].quantity + shoppingList[2].quantity }}</p>
+                                                    shoppingList[1].quantity + shoppingList[2].quantity }}</p>
                                             <p class="mb-0">$ {{ shoppingList[0].price * shoppingList[0].quantity +
                                                 shoppingList[1].price * shoppingList[1].quantity + shoppingList[2].price
-                                                * shoppingList[2].quantity}}</p>
+                                                * shoppingList[2].quantity }}</p>
                                             <p class="mb-0">$ 120</p>
                                             <p class="mb-0">$ {{ shoppingList[0].price * shoppingList[0].quantity +
                                                 shoppingList[1].price * shoppingList[1].quantity + shoppingList[2].price
