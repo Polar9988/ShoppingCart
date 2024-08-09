@@ -8,6 +8,23 @@ export default {
     created() {
         this.loadLocalStorage();  // Load data when component is created
     },
+    computed: {
+        totalQuantity() {
+            return this.shoppingList.reduce((total, item) => total + (item?.quantity || 0), 0);
+        },
+        totalPrice() {
+            return this.shoppingList.reduce((total, item) => total + (item?.price || 0) * (item?.quantity || 0), 0);
+        },
+        subtotal() {
+            return this.totalPrice;
+        },
+        shippingFee() {
+            return 120;  // Static value for shipping fee
+        },
+        grandTotal() {
+            return this.totalPrice + this.shippingFee;
+        }
+    },
     methods: {
         loadLocalStorage() {
             try {
@@ -21,6 +38,7 @@ export default {
     }
 }
 </script>
+
 
 
 <template>
