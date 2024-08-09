@@ -1,5 +1,4 @@
 <script>
-import { RouterLink, RouterView } from 'vue-router'
 import backgroundPic from '@/assets/img/大圖.jpg'
 
 export default {
