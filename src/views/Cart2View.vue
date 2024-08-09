@@ -14,7 +14,7 @@ export default {
         },
         totalPrice() {
             return this.shoppingList.reduce((total, item) => total + (item?.price || 0) * (item?.quantity || 0), 0);
-        },
+        }
         subtotal() {
             return this.totalPrice;
         },
@@ -29,7 +29,11 @@ export default {
         loadLocalStorage() {
             try {
                 const storedList = localStorage.getItem('shoppingList');
-                this.shoppingList = storedList ? JSON.parse(storedList) : [];
+                this.shoppingList = storedList ? JSON.parse(storedList).map(item => ({
+                    ...item,
+                    quantity: item.quantity || 0,
+                    price: item.price || 0
+                })) : [];
             } catch (error) {
                 console.error("Error loading shopping list from localStorage:", error);
                 this.shoppingList = [];  // Set to empty array if there's an error
