@@ -710,7 +710,6 @@ iframe {
   position: absolute;
   width: 50px;
   height: 50px;
-  background-image: url(../img/哭枯木耳.jfif);
   background-size: cover;
   clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
   top: 50%;

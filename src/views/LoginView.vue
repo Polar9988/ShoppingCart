@@ -133,7 +133,6 @@ export default {
 }
 
 .login-picture {
-    background-image: url(../img/大圖.jpg);
     background-size: cover;
 }
 
