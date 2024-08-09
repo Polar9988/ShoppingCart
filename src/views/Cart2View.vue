@@ -186,7 +186,7 @@ export default {
                                         class="col-3 col-lg-3 align-items-center d-flex text-center justify-content-center">
                                         <div class="">
                                             <p class="mb-0" v-if="shoppingList.length >= 3">
-                                                {{ totalQuantity }}
+                                                
                                             </p>
                                             <p class="mb-0" v-if="shoppingList.length >= 3">
                                                 $ {{ subtotal }}
