@@ -17,7 +17,7 @@ export default {
         };
     },
     created() {
-        this.loadLocalStorage(); 
+        this.loadLocalStorage();
     },
     computed: {
         totalQuantity() {
@@ -38,13 +38,19 @@ export default {
         setlocalStorage() {
             localStorage.setItem('shoppingList', JSON.stringify(this.shoppingList));
         },
-        loadLocalStorage() {
+        loadlocalStorage() {
             try {
                 const storedList = localStorage.getItem('shoppingList');
-                this.shoppingList = storedList ? JSON.parse(storedList) : [];
+                const parsedList = storedList ? JSON.parse(storedList) : [];
+                this.shoppingList = parsedList.map(item => ({
+                    id: item.id || 0,
+                    name: item.name || '',
+                    price: item.price || 0,
+                    quantity: item.quantity || 1 // 默认值
+                }));
             } catch (error) {
                 console.error("Error loading shopping list from localStorage:", error);
-                this.shoppingList = []; // Set to empty array if there's an error
+                this.shoppingList = [];
             }
         }
     }
@@ -145,10 +151,8 @@ export default {
                                 </div>
 
                                 <div class="col-5 col-lg-6  d-flex align-items-center justify-content-end">
-                                    <countBtn :itemId="1"
-                                        :initialCount="shoppingList[0].quantity"
-                                        @send="updateQuantity" 
-                                    />
+                                    <countBtn :itemId="1" :initialCount="shoppingList[0].quantity"
+                                        @send="updateQuantity" />
                                 </div>
 
 
@@ -179,10 +183,8 @@ export default {
                                     </div>
 
                                     <div class="col-5 col-lg-6  d-flex align-items-center justify-content-end">
-                                        <countBtn :itemId="2"
-                                            :initialCount="shoppingList[1].quantity"
-                                            @send="updateQuantity" 
-                                        />
+                                        <countBtn :itemId="2" :initialCount="shoppingList[1].quantity"
+                                            @send="updateQuantity" />
                                     </div>
 
 
@@ -213,10 +215,8 @@ export default {
                                         </div>
 
                                         <div class="col-5 col-lg-6  d-flex align-items-center justify-content-end">
-                                            <countBtn :itemId="3"
-                                            :initialCount="shoppingList[2].quantity"
-                                            @send="updateQuantity" 
-                                        />
+                                            <countBtn :itemId="3" :initialCount="shoppingList[2].quantity"
+                                                @send="updateQuantity" />
                                         </div>
 
 
@@ -246,10 +246,16 @@ export default {
                                     <div
                                         class="col-3 col-lg-3 align-items-center d-flex text-center justify-content-center">
                                         <div class="">
-                                            <p class="mb-0">{{ shoppingList[0].quantity}} + {{ shoppingList[1].quantity }} + {{ shoppingList[2].quantity }} = {{ shoppingList[0].quantity + shoppingList[1].quantity + shoppingList[2].quantity }}</p>
-                                            <p class="mb-0">$ {{ shoppingList[0].price * shoppingList[0].quantity + shoppingList[1].price * shoppingList[1].quantity + shoppingList[2].price * shoppingList[2].quantity}}</p>
+                                            <p class="mb-0">{{ shoppingList[0].quantity }} + {{ shoppingList[1].quantity
+                                                }} + {{ shoppingList[2].quantity }} = {{ shoppingList[0].quantity +
+                                                shoppingList[1].quantity + shoppingList[2].quantity }}</p>
+                                            <p class="mb-0">$ {{ shoppingList[0].price * shoppingList[0].quantity +
+                                                shoppingList[1].price * shoppingList[1].quantity + shoppingList[2].price
+                                                * shoppingList[2].quantity}}</p>
                                             <p class="mb-0">$ 120</p>
-                                            <p class="mb-0">$ {{ shoppingList[0].price * shoppingList[0].quantity + shoppingList[1].price * shoppingList[1].quantity + shoppingList[2].price * shoppingList[2].quantity + 120 }}</p>
+                                            <p class="mb-0">$ {{ shoppingList[0].price * shoppingList[0].quantity +
+                                                shoppingList[1].price * shoppingList[1].quantity + shoppingList[2].price
+                                                * shoppingList[2].quantity + 120 }}</p>
                                         </div>
 
                                     </div>
