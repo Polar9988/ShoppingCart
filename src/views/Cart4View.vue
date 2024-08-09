@@ -1,69 +1,27 @@
 <script>
-import { RouterLink } from 'vue-router';
-import countBtn from '@/components/countBtn.vue';
+import { RouterLink, } from 'vue-router'
 
 export default {
-    components: {
-        countBtn,
-        RouterLink
-    },
     data() {
         return {
-            shoppingList: [
-                { id: 1, name: "神奇餃子", price: 120, quantity: 1 },
-                { id: 2, name: "就是木耳", price: 20, quantity: 1 },
-                { id: 3, name: "貓咪卡在塑膠罐裡", price: 50, quantity: 1 },
-            ]
+            shoppingList: [],
         };
     },
     created() {
-        this.loadLocalStorage(); 
-    },
-    computed: {
-        totalQuantity() {
-            return this.shoppingList.reduce((total, item) => total + (item.quantity || 0), 0);
-        },
-        totalPrice() {
-            return this.shoppingList.reduce((total, item) => total + (item.price * (item.quantity || 0)), 0);
-        }
+        this.loadLocalStorage();
     },
     methods: {
-        updateQuantity({ id, quantity }) {
-            console.log(`更新 id 為 ${id} 的項目數量為 ${quantity}`);
-            const item = this.shoppingList.find(item => item.id === id);
-            if (item) {
-                if (quantity !== undefined && quantity >= 0) {
-                    item.quantity = quantity;
-                } else {
-                    console.error(`數量無效: ${quantity}`);
-                }
-            } else {
-                console.error(`未找到 id 為 ${id} 的項目。`);
-            }
-            this.setLocalStorage(); // 更新 localStorage
-        },
-        setLocalStorage() {
-            localStorage.setItem('shoppingList', JSON.stringify(this.shoppingList));
-        },
         loadLocalStorage() {
             try {
                 const storedList = localStorage.getItem('shoppingList');
-                if (storedList) {
-                    this.shoppingList = JSON.parse(storedList);
-                    // 確保每個 item 都有 quantity 屬性
-                    this.shoppingList.forEach(item => {
-                        if (item.quantity === undefined) {
-                            item.quantity = 1; // 默認值
-                        }
-                    });
-                }
+                this.shoppingList = storedList ? JSON.parse(storedList) : [];
             } catch (error) {
-                console.error("從 localStorage 載入購物清單時發生錯誤:", error);
-                this.shoppingList = []; // 若發生錯誤，設為空陣列
+                console.error("Error loading shopping list from localStorage:", error);
+                this.shoppingList = [];  // Set to empty array if there's an error
             }
         }
     }
-};
+}
 </script>
 
 <template>
