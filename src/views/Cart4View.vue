@@ -11,13 +11,19 @@ export default {
         this.loadLocalStorage();
     },
     methods: {
-        loadLocalStorage() {
+        loadlocalStorage() {
             try {
                 const storedList = localStorage.getItem('shoppingList');
-                this.shoppingList = storedList ? JSON.parse(storedList) : [];
+                const parsedList = storedList ? JSON.parse(storedList) : [];
+                this.shoppingList = parsedList.map(item => ({
+                    id: item.id || 0,
+                    name: item.name || '',
+                    price: item.price || 0,
+                    quantity: item.quantity || 1 // 默认值
+                }));
             } catch (error) {
                 console.error("Error loading shopping list from localStorage:", error);
-                this.shoppingList = [];  // Set to empty array if there's an error
+                this.shoppingList = [];
             }
         }
     }
