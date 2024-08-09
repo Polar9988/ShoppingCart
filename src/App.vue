@@ -96,7 +96,6 @@ export default {
 .my-circle {
   width: 140px;
   height: 140px;
-  background-image: url('~@/assets/img/貓罐子.jfif');
   background-size: cover;
 }
 
