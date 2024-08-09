@@ -39,8 +39,6 @@ export default {
 }
 </script>
 
-
-
 <template>
     <main class="container-xxl py-lg-5 py-2 px-xxl-5">
         <div class="container my-5 my-bg-pic">
