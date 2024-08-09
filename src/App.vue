@@ -19,7 +19,7 @@ export default {
       style="background:linear-gradient(to right, #e4afcb 0%, #b8cbb8 0%, #b8cbb8 0%, #e2c58b 30%, #c2ce9c 64%, #7edbdc 100%);">
       <div class="container-xxl">
         <router-link to="/">
-          <a class="navbar-brand" href="./BS5-example2.html">
+          <a class="navbar-brand">
             <img src="@/assets/img/餃子精靈.jpg" alt="Logo" width="80" height="80" class="d-inline-block align-text-top">
           </a>
         </router-link>
